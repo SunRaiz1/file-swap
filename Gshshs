@@ -1,0 +1,226 @@
+#include <iostream>
+#include <ctime>
+#include <cmath>
+#include <locale.h>
+const int n=10;
+using namespace std;
+
+void FillInc(int a[], int n) //���������� ������� ������������� ������� 
+{
+	cout <<"������������ ������: \n";
+	for (int i=1; i<=n; i++) 
+		a[i]=i;
+}
+
+
+void FillDec(int a[], int n) //���������� ������� ���������� �������
+{
+	cout <<"��������� ������: \n";
+    for (int j = n, i = 1; i <= n; j--, i++)
+        a[i] = j;
+        return;
+}
+
+
+void FillRand(int a[], int n) //���������� ������� ���������� ������� 
+{
+	cout <<"��������� ������: \n";
+    srand(time(NULL));
+    for (int i = 1; i <= n; i++)
+        a[i] = rand() % n;
+        return;
+}
+
+
+int CheckSum(int a[], int n) //������� ����������� ����� ��������� �������
+{
+    int Sum = 0;
+    for (int i = 1; i <= n; i++)
+        Sum += a[i];
+    cout << "Control summa = " << Sum << endl;
+    return Sum;
+
+}
+
+int RunNumber(int a[], int n) //������� ����� � �������
+{
+    int Number = 1;
+    for (int i = 1; i <= n - 1; i++) {
+        if (a[i] > a[i + 1])
+            Number += 1;
+    }
+    cout << "Number Series = " << Number << endl;
+    return Number;
+}
+
+void PrintMas (int a[], int n)
+{
+	for (int i=1; i<=n; i++) 
+		cout << a[i] <<" ";
+	cout <<endl;
+}
+
+void SelectSort (int a[], int n)
+{
+	cout <<"SelectSort: \n";
+	int k, add;
+	for (int i=1; i<=n-1; i++) 
+	{
+		k=i;
+		for (int j=i+1; j<=n; j++) 
+		{
+			if (a[j]<a[k]) k=j;
+		}
+		add=a[i];
+		a[i]=a[k];
+		a[k]=add;
+	}
+}
+
+void BubbleSort(int a[], int n) 
+{
+	cout <<"BubbleSort: \n";
+    int k;
+    for (int i = 1; i <= n - 1; i++) {
+        for (int j = n; j >= i + 1; j--) {
+            if (a[j] < a[j - 1]) {
+                k = a[j];
+                a[j] = a[j - 1];
+                a[j - 1] = k;
+            }
+        }
+    }
+}
+
+void ShakerSort(int a[], int n)
+{
+	cout <<"ShakertSort: \n";
+    int L = 1, R = n, k = n, t; 
+    while (L < R) {
+        for (int j = R; j >= L + 1; j--) {
+            if (a[j] < a[j - 1]) {
+                t = a[j];
+                a[j] = a[j - 1];
+                a[j - 1] = t;
+                k = j;
+            }
+        }
+        L = k;
+        for (int j = L; j <= R - 1; j++) {
+            if (a[j] > a[j + 1]) {
+                t = a[j];
+                a[j] = a[j + 1];
+                a[j + 1] = t;
+                k = j;
+            }
+        }
+        R = k;
+    }
+}
+
+void InsertSort(int a[], int n) 
+{
+	cout <<"InsertSort: \n";
+    int t, j;
+    for (int i = 2; i <= n; i++) {
+        t = a[i];
+        j = i - 1;
+         while ((j > 0) && (t < a[j])) {
+            a[j + 1] = a[j];
+            j = j - 1;
+        }
+        a[j + 1] = t; 
+    }
+}
+
+void ShellSort(int a[], int n)
+{
+	cout <<"ShellSort: \n";
+    int h = 1, j, t, i;
+    int m = log10(n)/log10(2) - 1;
+    cout <<"h=" <<h <<endl;
+    for (int f = 1; f < m; f++) 
+        h = 2 * h + 1;
+        cout <<"h=" <<h <<endl;
+
+    for (int k = h; k >= 1; k /= 2) {
+        for (i = k+1; i <= n; i++) {
+            t = a[i];
+            j = i - k;
+
+            while((j > 0) && (t < a[j])) {
+                a[j + k] = a[j];
+                j = j - k;
+            }
+            a[j + k] = t;
+        }
+    }
+}
+
+//void HeapSort (int a[], int n)
+//{
+//	cout <<"HeapSort: \n";
+//	int L=n/2, R, i, j, t, X;
+//	while (L<0) 
+//	{
+//		L--;
+//	}
+//	R=n;
+//	while (R>1)
+//	{
+//		t=a[1];
+//		a[1]=a[R];
+//		a[R]=t;
+//		R--;
+//	}
+//	X=a[L], i=L;
+//	
+//	while()
+//	{
+//		j=2*i;
+//		if (j>R) break;
+//		if (j<R && a[j+1]<=a[j]) j++;
+//		if (X<=a[j]) break;
+//		a[i]=a[j];
+//		i=j;
+//	}
+//	a[i]=X;	
+//}
+
+void Heapify(int a[], int L, int n)
+{
+    int R = n;
+    int x = a[L];
+    int i = L;
+
+    do {
+        int j = 2 * i;
+        if (j > R) break;
+        if (j < R && a[j + 1] <= a[j])
+            j++;
+        if (x <= a[j]) break;
+        a[i] = a[j];
+        i = j;
+    } while (true);
+
+    a[i] = x;
+}
+
+void HeapSort(int a[], int n)
+{
+	cout <<"HeapSort: \n";
+    int L = n / 2;
+    while (L > 0) {
+        Heapify(a, L, n);
+        L--;
+    }
+
+    int R = n, t;
+    while (R > 1) {
+        t = a[1];
+        a[1] = a[R];
+        a[R] = t;
+        R--;
+        Heapify(a, 1, R);
+    }
+}
